@@ -1,11 +1,7 @@
 package github.com.alanngeorge1.domain.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -25,6 +21,9 @@ public class Cliente {
             length = 100
     )
     private String nome;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<Pedido> pedidos;
 
     public Cliente(Integer id, String nome) {
         this.id = id;
@@ -52,6 +51,14 @@ public class Cliente {
 
     public String getNome() {
         return this.nome;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public void setNome(String nome) {

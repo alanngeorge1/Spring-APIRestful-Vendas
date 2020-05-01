@@ -1,21 +1,32 @@
 package github.com.alanngeorge1.domain.entity;
-
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table (name = "produto")
 public class Produto {
-    private String produto;
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "descricao")
+    private String descricao;
+
+    @Column(name = "precoUnitario")
     private BigDecimal precoUnitario;
+
 
     public Produto() {
     }
 
-    public String getProduto() {
-        return this.produto;
+    public String getDescricaoo() {
+        return this.descricao;
     }
 
-    public void setProduto(String produto) {
-        this.produto = produto;
+    public void setDescricao(String produto) {
+        this.descricao = descricao;
     }
 
     public Integer getId() {

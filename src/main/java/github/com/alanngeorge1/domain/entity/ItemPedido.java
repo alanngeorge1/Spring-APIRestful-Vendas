@@ -1,10 +1,27 @@
 package github.com.alanngeorge1.domain.entity;
 
+
+
+import javax.persistence.*;
+
+@Entity
+@Table(name ="Item_Pedido")
 public class ItemPedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn (name = "pedido_id")
     private Pedido pedidoID;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produtoId;
+
+    @Column
     private Integer quantidade;
 
     public ItemPedido() {
