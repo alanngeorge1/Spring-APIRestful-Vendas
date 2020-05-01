@@ -6,26 +6,26 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table (name = "Pedido")
+@Table(name = "pedido")
 public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn (name = "cliente_id")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-
-    @Column(name ="total", length = 20, precision = 2)
+    @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
-    public Pedido() {
-    }
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens;
 
     public List<ItemPedido> getItens() {
         return itens;
@@ -35,11 +35,8 @@ public class Pedido {
         this.itens = itens;
     }
 
-    @OneToMany (mappedBy = "pedidoID")
-    private List<ItemPedido> itens;
-
     public Integer getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id) {
@@ -55,7 +52,7 @@ public class Pedido {
     }
 
     public LocalDate getDataPedido() {
-        return this.dataPedido;
+        return dataPedido;
     }
 
     public void setDataPedido(LocalDate dataPedido) {
@@ -63,10 +60,19 @@ public class Pedido {
     }
 
     public BigDecimal getTotal() {
-        return this.total;
+        return total;
     }
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", total=" + total +
+                '}';
     }
 }

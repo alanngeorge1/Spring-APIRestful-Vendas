@@ -5,54 +5,51 @@ package github.com.alanngeorge1.domain.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="Item_Pedido")
+@Table(name = "item_pedido")
 public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn (name = "pedido_id")
-    private Pedido pedidoID;
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
-    private Produto produtoId;
+    private Produto produto;
 
     @Column
     private Integer quantidade;
 
-    public ItemPedido() {
-    }
-
     public Integer getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public Pedido getPedidoID() {
-        return this.pedidoID;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setPedidoID(Pedido pedidoID) {
-        this.pedidoID = pedidoID;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public Produto getProdutoId() {
-        return this.produtoId;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setProdutoId(Produto produtoId) {
-        this.produtoId = produtoId;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public Integer getQuantidade() {
-        return this.quantidade;
+        return quantidade;
     }
 
     public void setQuantidade(Integer quantidade) {

@@ -3,45 +3,41 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table (name = "produto")
+@Table(name = "produto")
 public class Produto {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 
     @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "precoUnitario")
-    private BigDecimal precoUnitario;
-
-
-    public Produto() {
-    }
-
-    public String getDescricaoo() {
-        return this.descricao;
-    }
-
-    public void setDescricao(String produto) {
-        this.descricao = descricao;
-    }
+    @Column(name = "preco_unitario")
+    private BigDecimal preco;
 
     public Integer getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public BigDecimal getPrecoUnitario() {
-        return this.precoUnitario;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setPrecoUnitario(BigDecimal precoUnitario) {
-        this.precoUnitario = precoUnitario;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
     }
 }
