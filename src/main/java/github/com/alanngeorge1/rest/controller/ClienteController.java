@@ -2,10 +2,13 @@ package github.com.alanngeorge1.rest.controller;
 
 import github.com.alanngeorge1.domain.entity.Cliente;
 import github.com.alanngeorge1.domain.repository.Clientes;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,7 +49,7 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
 
     }
-@PutMapping("/api/clientes/{id}")
+    @PutMapping("/api/clientes/{id}")
     @ResponseBody
     public ResponseEntity update(@PathVariable Integer id, @RequestBody Cliente cliente){
         return clientes.findById(id)
@@ -57,5 +60,16 @@ public class ClienteController {
         }).orElseGet( () -> ResponseEntity.notFound().build());
 
     }
+    @GetMapping("/api/clientes")
+    @ResponseBody
+    public  ResponseEntity find(Cliente filtro){
+        ExampleMatcher matcher = ExampleMatcher
+                                .matching()
+                                .withIgnoreCase()
+                                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+        List <Cliente> lista = clientes.findAll(example);
+        return ResponseEntity.ok(lista);
 
+    }
 }
