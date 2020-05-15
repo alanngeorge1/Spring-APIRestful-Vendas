@@ -5,6 +5,7 @@ import github.com.alanngeorge1.domain.entity.Cliente;
 import github.com.alanngeorge1.domain.entity.ItemPedido;
 import github.com.alanngeorge1.domain.entity.Pedido;
 import github.com.alanngeorge1.domain.entity.Produto;
+import github.com.alanngeorge1.domain.enums.StatusPedido;
 import github.com.alanngeorge1.domain.repository.Clientes;
 import github.com.alanngeorge1.domain.repository.ItemsPedido;
 import github.com.alanngeorge1.domain.repository.Pedidos;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,12 +44,18 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itemsPedido = converterItems(pedido, dto.getItems());
         repository.save(pedido);
         itemsPedidoRepository.saveAll(itemsPedido);
         pedido.setItens(itemsPedido);
         return pedido;
+    }
+
+    @Override
+    public Optional <Pedido> obterPedidoCompleto(Integer id) {
+        return  repository.findByIdFetchItens(id);
     }
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items){
