@@ -10,6 +10,7 @@ import github.com.alanngeorge1.domain.repository.Clientes;
 import github.com.alanngeorge1.domain.repository.ItemsPedido;
 import github.com.alanngeorge1.domain.repository.Pedidos;
 import github.com.alanngeorge1.domain.repository.Produtos;
+import github.com.alanngeorge1.exception.PedidoNaoEncontradoException;
 import github.com.alanngeorge1.exception.RegraNegocioException;
 import github.com.alanngeorge1.rest.dto.ItemPedidoDTO;
 import github.com.alanngeorge1.rest.dto.PedidoDTO;
@@ -56,6 +57,19 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional <Pedido> obterPedidoCompleto(Integer id) {
         return  repository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+        repository.
+                findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(statusPedido);
+                   return repository.save(pedido);
+                }).orElseThrow(()-> new PedidoNaoEncontradoException() );
+
+
     }
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items){

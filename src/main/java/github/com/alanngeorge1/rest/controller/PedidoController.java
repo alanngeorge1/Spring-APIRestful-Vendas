@@ -3,6 +3,8 @@ package github.com.alanngeorge1.rest.controller;
 
 import github.com.alanngeorge1.domain.entity.ItemPedido;
 import github.com.alanngeorge1.domain.entity.Pedido;
+import github.com.alanngeorge1.domain.enums.StatusPedido;
+import github.com.alanngeorge1.rest.dto.AtualizcaoStatusPedidoDTO;
 import github.com.alanngeorge1.rest.dto.InfomacaoItempedidoDTO;
 import github.com.alanngeorge1.rest.dto.InformacoesPeditoDTO;
 import github.com.alanngeorge1.rest.dto.PedidoDTO;
@@ -52,6 +54,16 @@ private PedidoService service;
                 .items(converter(pedido.getItens()))
                .status(pedido.getStatus().name())
                 .build();
+
+    }
+
+    @PatchMapping ("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@RequestBody AtualizcaoStatusPedidoDTO dto, @PathVariable Integer id){
+        String novoStatus = dto.getNovoStatus();
+        service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
+
+
 
     }
     private List<InfomacaoItempedidoDTO> converter (List<ItemPedido> itens){
