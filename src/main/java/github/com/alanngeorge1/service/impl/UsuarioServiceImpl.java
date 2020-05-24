@@ -2,6 +2,7 @@ package github.com.alanngeorge1.service.impl;
 
 import github.com.alanngeorge1.domain.entity.Usuario;
 import github.com.alanngeorge1.domain.repository.UsuarioRepository;
+import github.com.alanngeorge1.exception.senhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,15 @@ public class UsuarioServiceImpl implements UserDetailsService {
     @Transactional
     public Usuario salvar(@RequestBody  Usuario usuario){
         return repository.save(usuario);
+    }
+
+    public UserDetails autenticar(Usuario usuario){
+        UserDetails user = loadUserByUsername(usuario.getLogin());
+       boolean senhasIgual = encoder.matches(usuario.getSenha(), user.getPassword());
+       if(senhasIgual){
+           return user;
+       }
+       throw new senhaInvalidaException();
     }
 
 
