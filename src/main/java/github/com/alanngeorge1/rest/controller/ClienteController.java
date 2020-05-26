@@ -2,6 +2,7 @@ package github.com.alanngeorge1.rest.controller;
 
 import github.com.alanngeorge1.domain.entity.Cliente;
 import github.com.alanngeorge1.domain.repository.Clientes;
+import io.swagger.annotations.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class ClienteController {
     }
 
     @GetMapping("{id}")
+
     public Cliente getClienteByid(@PathVariable Integer id) {
         return clientes.findById(id)
                 .orElseThrow(() ->
